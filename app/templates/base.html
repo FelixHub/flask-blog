@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+        {% if title %}
+        <title>{{ title }} | Blog</title>
+        {% else %}
+        <title> Félix Hubert | Blog</title>
+        {% endif %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        
+        <!-- This is the script for proper math formula rendering -->
+        <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [["$", "$"], ["\\\\(", "\\\\)"]],
+            displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+            processEscapes: true
+        },
+        config: ["MMLorHTML.js"],
+        jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+        extensions: ["MathMenu.js", "MathZoom.js"]
+    });
+</script>
+    <!-- ------------------------------------------------- -->
+    </head> 
+    <body>
+        <div class='sidenav'>
+            <a href="/index"> - home</a>
+            <a href="/video">- video</a>
+            <a href="/blog">- blog</a>
+            <a href="/models">- fun models</a>
+            <a href="/about">- about me</a>
+        </div>
+        <div class='main'>
+            {% block content %}{% endblock %}
+        </div>
+        
+        <div class='footer'>
+            <p>Made by Félix Hubert using Flask, 2021 © </p>
+        </div>
+    </body>
+</html>

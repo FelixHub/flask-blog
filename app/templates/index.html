@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <img style="width:100%; display: block; margin-left: auto;"
+        src="{{ url_for('static', filename='img/background.jpg') }}">
+    </div>
+    <h1 style='text-align: right;' >Félix Hubert</h1>
+
+    <h1>Recent Blog Posts</h1>
+    {% for post in posts %}
+    <div class='blogpost' >
+        <a href="{{ url_for('blog_post', id=post.id) }}"><h2  style="display:inline;"> {{ post.title}} </h2>  <i  style="display:inline;">{{ post.timestamp }}</i> </a>
+    </div>
+
+    {% endfor %}
+    
+{% endblock %} 

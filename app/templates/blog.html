@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 style='text-align: right; padding-right:20px' >Blog Posts</h1>
+
+    {% for post in posts %}
+    <div class='blogpost'>
+        <a href="{{ url_for('blog_post', id=post.id) }}"><h2  style="display:inline;"> {{ post.title}} </h2>  <i  style="display:inline;">{{ post.timestamp }}</i> </a>
+    </div>
+    <div style = "height:15px;"></div>
+    {% endfor %}
+    
+{% endblock %} 

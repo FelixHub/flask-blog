@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #444;
+    font-size : 20px;
+    padding-bottom: 50px;
+    position : relative
+  }
+
+div.sidenav {
+height: 100%; /* Full-height: remove this if you want "auto" height */
+width: 200px; /* Set the width of the sidebar */
+position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+z-index: 1; /* Stay on top */
+top: 0; /* Stay at the top */
+left: 0;
+overflow-x: hidden; /* Disable horizontal scroll */
+padding-top: 20px;
+padding-left : 10px;
+}
+
+/* The navigation menu links */
+div.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #030303;
+  display: block;
+}
+
+  /* When you mouse over the navigation links, change their color */
+div.sidenav a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+  
+  /* Style page content */
+div.main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 30px 30px;
+}
+
+
+div.blogpost a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #444;
+  display: inline-block;
+}
+div.blogpost a:hover {
+  color: #ffffff;
+  background:  #444
+} 
+
+
+div.footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding-top:50px;
+  height:50px;
+  text-align: center;
+  font-size: 15px;
+}
+
+div.video-container {
+  width:auto;
+  margin-bottom : 30px;
+  padding : 10px;
+}
+
+div.video-subcontainer {
+  padding : 10px;
+  padding-bottom : 15px;
+  margin-bottom : 5px;
+  width : 510px;
+  justify-content: center;
+
+}
+
+
+textarea.input_area {
+  width: 400px;
+	height: 100px;
+	border: 3px solid #444;
+	padding: 5px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+}
+
+button.input_button {
+  background-color: #444; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  margin : 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor:pointer;
+  border: 3px solid #444;
+  font-size : 20px;
+}
+
+button.input_button:hover {
+  background-color: #ffffff; /* Green */
+  color: #444;
+  border: 3px solid #444;
+  margin : 10px;
+  cursor:pointer;
+}

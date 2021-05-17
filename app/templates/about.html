@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style=' padding-right:20px; text-align : right' >About me</h1>
+
+<div style="width : 100%;text-align: right;">
+
+    <div style="margin-right:10%; width: 50%;display: inline-block; 
+                text-align:justify; 
+                @media (max-width: 620px) { width: 100%;}">
+    Hi, my name is Félix Hubert, I am 23 year old french student.
+    I have various interests in the fields of neurosciences, machine learning and philosophy.
+    This website is my "internet home", where I gather the few interesting stuff I've been working on lately.
+    </div>
+
+    <img style="width: 25%;max-width : 200px;
+                padding : 0px;
+                display: block; 
+                display: inline-block;
+                vertical-align: top;
+                margin-right : 0;
+                margin-left : auto;"
+
+    src="{{ url_for('static', filename='img/me.jpeg') }}">
+
+
+</div> 
+
+    
+{% endblock %} 
