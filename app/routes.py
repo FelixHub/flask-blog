@@ -1,28 +1,14 @@
 from flask import render_template,request,url_for,redirect,flash
-from app import app,db,rap_model,indices_word,word_indices
-from app.models import Post,MD_Post
+from app import app,db
+from app.models import MD_Post
 import markdown
 from datetime import datetime
-import re
-import numpy as np
-
-def sample(preds, temperature=1):
-    # sample an index from a probability array
-    preds = np.asarray(preds).astype('float64')
-    preds = np.log(preds) / temperature
-    exp_preds = np.exp(preds)
-    preds = exp_preds / np.sum(exp_preds)
-    probas = np.random.multinomial(1, preds, 1)
-    return np.argmax(probas)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    # posts =  MD_Post.query.limit(3).all()
-    filenames = os.listdir(url_for('static', filename='posts/'))
-    posts = [{} for _ in range(len(filenames))]
-    for filename in filenames :
-        with open(filename, 'r') as f:  
+    posts =  MD_Post.query.all()
+    for post in posts : 
         post.body = markdown.markdown(post.body,    
                                       extensions=['mdx_math'])
         post.timestamp = post.timestamp.strftime('%Y-%m-%d')
@@ -30,7 +16,7 @@ def index():
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
-    # posts =  MD_Post.query.all()
+    posts =  MD_Post.query.all() 
 
     for post in posts :
         post.body = markdown.markdown(post.body,    
@@ -40,7 +26,7 @@ def blog():
 
 @app.route('/blog_post/<id>', methods=['GET', 'POST'])
 def blog_post(id):
-    # posts =  MD_Post.query.filter_by( id = id )
+    posts =  MD_Post.query.filter_by( id = id )
     
     for post in posts :
         post.body = markdown.markdown(post.body,    
@@ -60,7 +46,7 @@ def about():
 def models():
     return render_template('ML/models.html', title='fun ML models')
 
-'''
+
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST' : 
@@ -71,17 +57,33 @@ def create():
         return redirect(url_for('index'))
 
     return render_template('create.html', title='create a blog post')
+
+
+
+
+@app.route('/models/rap_bot', methods=['GET', 'POST'])
+def rap_bot():
+    return("Coming soon...")
+
 '''
+import re
+import numpy as np
+def sample(preds, temperature=1):
+    # sample an index from a probability array
+    preds = np.asarray(preds).astype('float64')
+    preds = np.log(preds) / temperature
+    exp_preds = np.exp(preds)
+    preds = exp_preds / np.sum(exp_preds)
+    probas = np.random.multinomial(1, preds, 1)
+    return np.argmax(probas)
+
 
 @app.route('/models/rap_bot', methods=['GET', 'POST'])
 def rap_bot():
     
     output = []
     sentence = []
-    ''' 
-    Yo voici le retour du rap de robot
-    Un max de flow tu le sais
-    '''
+
     if request.method == 'POST' : 
         sentence = request.form['lyric']
         sentence = re.findall(r'\S+|\n',sentence)
@@ -117,3 +119,5 @@ def rap_bot():
                             used_seed = sentence,
                             generated_lyrics= output,
                             title='Rap-bot 3000')
+
+'''
