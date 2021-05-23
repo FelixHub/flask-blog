@@ -42,6 +42,16 @@ div.main {
 }
 
 
+div.post {
+  max-width: 1000px;
+  margin : auto;
+}
+
+div.post_title {
+  margin : auto;
+  max-width: 1000px;
+}
+
 div.blogpost a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -53,6 +63,13 @@ div.blogpost a:hover {
   color: #ffffff;
   background:  #444
 } 
+
+div.blogpost p {
+  padding: 0px 0px 0px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #444;
+}
 
 
 div.footer {

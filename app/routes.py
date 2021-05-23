@@ -1,5 +1,5 @@
 from flask import render_template,request,url_for,redirect,flash
-from app import app
+from app import app,word_indices,rap_model,indices_word
 import markdown
 from datetime import datetime
 import os
@@ -54,7 +54,7 @@ def index():
         posts.append(post_obj)
     sorted_posts = sorted(posts, 
         key=lambda x: datetime.strptime(x.date, '%d-%m-%Y'), reverse=True)
-    return render_template('index.html', title='Home', posts=sorted_posts)
+    return render_template('index.html', title='Home', posts=sorted_posts[:3])
 
 
 @app.route('/blog', methods=['GET', 'POST'])
@@ -101,12 +101,6 @@ def models():
     return render_template('ML/models.html', title='fun ML models')
 
 
-@app.route('/models/rap_bot', methods=['GET', 'POST'])
-def rap_bot():
-    return("Coming soon...")
-
-'''
-import re
 import numpy as np
 def sample(preds, temperature=1):
     # sample an index from a probability array
@@ -159,5 +153,3 @@ def rap_bot():
                             used_seed = sentence,
                             generated_lyrics= output,
                             title='Rap-bot 3000')
-
-'''
