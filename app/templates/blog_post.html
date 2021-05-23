@@ -9,14 +9,10 @@
     display: block;"
         src="{{ url_for('static', filename='img/sun.jpeg') }}">
 
-    {% for post in posts %}
-
     <h1>{{post.title}}</h1>
 
     <div>
-            {{ post.body |safe }}
+            {{ post.content_html |safe }}
     </div>
-
-    {% endfor %}
     
 {% endblock %} 

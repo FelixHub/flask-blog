@@ -1,37 +1,91 @@
 from flask import render_template,request,url_for,redirect,flash
-from app import app,db
-from app.models import MD_Post
+from app import app
 import markdown
 from datetime import datetime
+import os
+import collections
+import re
 
+class Post:
+    """
+    An instance contains metadata about a blog post as well as the body of the
+    blog post written in Markdown. Upon instantiation, the Markdown content is
+    additionally converted into HTML.
+    """
+    def __init__(self, title, date, tags, summary, href, content_md):
+        self.title = title
+        self.date = date
+        self.tags = tags
+        self.summary = summary
+        self.href = href
+        self.content_md = content_md
+        self.content_html = markdown.markdown(content_md,extensions=['mdx_math'])
+
+def parse_markdown_post(md_path):
+    """
+    Use a regular expression to parse the components of a Markdown post's
+    header and the post body. Return an assembled Post object,
+    """
+    with open(md_path, 'rb') as f:
+        markdown = f.read().decode('utf-8')
+    re_pat = re.compile(r'title: (?P<title>[^\n]*)\sdate: (?P<date>\d{2}-\d{2}-\d{4})\s'
+                        r'tags: (?P<tags>[^\n]*)\ssummary: (?P<summary>[^\n]*)')
+    match_obj = re.match(re_pat, markdown)
+    title = match_obj.group('title')
+    date = match_obj.group('date') 
+    summary = match_obj.group('summary')
+    tags = sorted([tag.strip() for tag in match_obj.group('tags').split(',')])
+    print(md_path)
+    href = url_for('blog_post', post_title = md_path.rsplit('\\', 1)[-1][:-3])
+    content_md = re.split(re_pat, markdown)[-1]
+    return Post(title, date, tags, summary, href, content_md)
+  
+ 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    posts =  MD_Post.query.all()
-    for post in posts : 
-        post.body = markdown.markdown(post.body,    
-                                      extensions=['mdx_math'])
-        post.timestamp = post.timestamp.strftime('%Y-%m-%d')
-    return render_template('index.html', title='Home', posts=posts)
+    posts = []
+    content_path = os.path.join(app.root_path, 'content')
+    for file in os.listdir(content_path):
+        if not file.endswith('.md'):
+            continue
+        full_path = os.path.join(content_path, file)
+        post_obj = parse_markdown_post(full_path)
+        posts.append(post_obj)
+    sorted_posts = sorted(posts, 
+        key=lambda x: datetime.strptime(x.date, '%d-%m-%Y'), reverse=True)
+    return render_template('index.html', title='Home', posts=sorted_posts)
+
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
-    posts =  MD_Post.query.all() 
+    tag_dict = dict()
+    posts = []
+    content_path = os.path.join(app.root_path, 'content')
+    for file in os.listdir(content_path):
+        if not file.endswith('.md'):
+            continue
+        full_path = os.path.join(content_path, file)
+        post_obj = parse_markdown_post(full_path)
+        posts.append(post_obj)
+        for tag in post_obj.tags:
+            if tag not in tag_dict.keys():
+                tag_dict[tag] = 0
+            tag_dict[tag] += 1
+    sorted_tag_dict = collections.OrderedDict()
+    for key in sorted(tag_dict.keys()):
+        sorted_tag_dict[key] = tag_dict[key]
+    sorted_posts = sorted(posts, 
+        key=lambda x: datetime.strptime(x.date, '%d-%m-%Y'), reverse=True)
+    return render_template('blog.html', posts=sorted_posts,
+        tag_dict=sorted_tag_dict)    
 
-    for post in posts :
-        post.body = markdown.markdown(post.body,    
-                                      extensions=['mdx_math'])
-        post.timestamp = post.timestamp.strftime('%Y-%m-%d')
-    return render_template('blog.html', title='Blog posts', posts=posts)
-
-@app.route('/blog_post/<id>', methods=['GET', 'POST'])
-def blog_post(id):
-    posts =  MD_Post.query.filter_by( id = id )
-    
-    for post in posts :
-        post.body = markdown.markdown(post.body,    
-                                      extensions=['mdx_math'])
-    return render_template('blog_post.html',posts=posts)
+@app.route('/blog_post/<post_title>')
+def blog_post(post_title):
+    md_path  = os.path.join(app.root_path, 'content', '%s.md' % post_title)
+    post = parse_markdown_post(md_path)
+    print(post.title)
+    return render_template('blog_post.html', post=post)
 
 
 @app.route('/video', methods=['GET', 'POST'])
@@ -45,20 +99,6 @@ def about():
 @app.route('/models', methods=['GET', 'POST'])
 def models():
     return render_template('ML/models.html', title='fun ML models')
-
-
-@app.route('/create', methods=['GET', 'POST'])
-def create():
-    if request.method == 'POST' : 
-        post = MD_Post(body= request.form['content'],title=request.form['title'])
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post is now live!')
-        return redirect(url_for('index'))
-
-    return render_template('create.html', title='create a blog post')
-
-
 
 
 @app.route('/models/rap_bot', methods=['GET', 'POST'])
