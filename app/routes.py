@@ -54,7 +54,7 @@ def index():
         posts.append(post_obj)
     sorted_posts = sorted(posts, 
         key=lambda x: datetime.strptime(x.date, '%d-%m-%Y'), reverse=True)
-    return render_template('index.html', title='Home', posts=sorted_posts[:3])
+    return render_template('index.html', posts=sorted_posts[:3])
 
 
 @app.route('/blog', methods=['GET', 'POST'])
@@ -78,14 +78,14 @@ def blog():
     sorted_posts = sorted(posts, 
         key=lambda x: datetime.strptime(x.date, '%d-%m-%Y'), reverse=True)
     return render_template('blog.html', posts=sorted_posts,
-        tag_dict=sorted_tag_dict)    
+        tag_dict=sorted_tag_dict,title='Blog posts')    
 
 @app.route('/blog_post/<post_title>')
 def blog_post(post_title):
     md_path  = os.path.join(app.root_path, 'content', '%s.md' % post_title)
     post = parse_markdown_post(md_path)
     print(post.title)
-    return render_template('blog_post.html', post=post)
+    return render_template('blog_post.html', post=post, title=post.title)
 
 
 @app.route('/video', methods=['GET', 'POST'])

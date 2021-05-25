@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 style='text-align: right; padding-right:20px' >Blog Posts</h1>
     
-
+    <div style='position : relative ; margin-bottom : 20px;'>
+        <h1 style='position: absolute;top : 0px;right: 20px;color:black' >Blog Posts</h1>
+        <img style="width : 100%;margin-left: auto;margin-right: auto;display: block;"
+            src="{{ url_for('static', filename='img/forest.png') }}">
+    </div>
+    
     {% for post in posts %}
     <div class='blogpost'>
         <a href="{{ post.href }}"><h2  style="display:inline;"> {{ post.title}} </h2>  <i  style="display:inline;">{{ post.date }}</i> </a>

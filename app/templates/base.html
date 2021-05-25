@@ -3,9 +3,9 @@
         <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
         {% if title %}
-        <title>{{ title }} | Blog</title>
+        <title>{{ title }}</title>
         {% else %}
-        <title> Félix Hubert | Blog</title>
+        <title> Félix Hubert</title>
         {% endif %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         
@@ -37,7 +37,6 @@
         <div class='main'>
             {% block content %}{% endblock %}
         </div>
-        
         <div class='footer'>
             <p>Made by Félix Hubert using Flask, 2021 © </p>
         </div>

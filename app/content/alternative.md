@@ -1,4 +1,5 @@
-title: (FR) N'y a t'il aucune alternative ? date: 25-05-2021 tags: philo, capitalism summary: Notes de lecture de "Capitalist realism" de Mark Fisher
+title: N'y a t'il aucune alternative ? date: 25-05-2021 tags: philo, capitalism summary: Notes de lecture de "Capitalist realism" de Mark Fisher
+
 
 Voici mes notes de lectures du livre "Capitalist Realism" de Mark Fisher, publié en 2009. Fisher est un philosophe britannique de gauche dont les idées se sont beaucoup répandus dans les années 2010.
 
