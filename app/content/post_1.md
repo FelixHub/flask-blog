@@ -12,3 +12,5 @@ I can't agree more with what he says :
 This blog is a way for me to fight my general online shyness (I'm a big time lurker) and to improve my english writing (still, I'll post french stuff from time to time).
 
 I used Flask to build this blog because I want to serve self-made tensorflow ML models on it and staying within a python framework was appealing. I could have used a wordpress or something easier to start with, but building this blog was a great way to procrastinate :)
+
+![img](../static/img/posts/mix.png)
